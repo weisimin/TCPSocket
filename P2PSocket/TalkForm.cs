@@ -18,17 +18,23 @@ namespace P2PSocket
         public TalkForm()
         {
             InitializeComponent();
+
+            data_TalkingMessage.Columns.Add("UserName", typeof(string));
+            data_TalkingMessage.Columns.Add("MessageTime", typeof(DateTime));
+            data_TalkingMessage.Columns.Add("Content", typeof(string));
+            data_TalkingMessage.Columns.Add("RawJson", typeof(JObject));
+
         }
 
         private void Btn_Start_Click(object sender, EventArgs e)
         {
-            bs_Friend.DataSource = dat_Friends;
-            bs_TalkkingMessage.DataSource = dat_TalkingMessage;
+            bs_Friend.DataSource = data_Friends;
+            bs_TalkkingMessage.DataSource = data_TalkingMessage;
             StartTalk(tb_ip.Text, Convert.ToInt32(tb_port.Text));
 
 
         }
-        BindingList<Friend> dat_Friends = new BindingList<Friend>();
+        BindingList<Friend> data_Friends = new BindingList<Friend>();
         public class Friend
         {
             public string UserName { get; set; }
@@ -37,35 +43,15 @@ namespace P2PSocket
 
         }
 
-        BindingList<TalkMessage> dat_TalkingMessage = new BindingList<TalkMessage>();
-        public class TalkMessage
-        {
-            public string UserName { get; }
-            public string Content { get; }
+        DataTable data_TalkingMessage = new DataTable();
 
-            public DateTime MessageTime { get; }
-
-            public JObject MessageData
-            {
-                get
-                {
-                    return _MessageData;
-                }
-                set
-                {
-                    _MessageData = value;
-                }
-            }
-
-            private JObject _MessageData = null;
-        }
         #region 通讯有关的部分
-        TcpClient tc = null;
-        UdpClient udp = null;
+        TcpClient tcpc = null;
+        UdpClient udpc = null;
         private void StartTalk(string IP, Int32 Port)
         {
-            tc = new TcpClient();
-            tc.Connect(IPAddress.Parse(IP), Port);
+            tcpc = new TcpClient();
+            tcpc.Connect(IPAddress.Parse(IP), Port);
 
 
 
@@ -76,12 +62,12 @@ namespace P2PSocket
             ToSend["UserName"] = tb_username.Text;
             ToSend["Pwd"] = tb_password.Text;
             ToSend["Command"] = "Login";
-            MessageLib.SocketMessage sm = new MessageLib.SocketMessage(tc);
+            MessageLib.SocketMessage sm = new MessageLib.SocketMessage(tcpc);
             sm.OnReceiveMessage += sm_OnReceiveMessage;
             sm.OnSendError += sm_OnSendError;
             sm.OnReceiveError += sm_OnReceiveError;
             SocketError se = new SocketError();
-            IAsyncResult R = tc.Client.BeginReceive(sm.MessageIndex, 0, 4, SocketFlags.None, out se, sm.SizeReceiveCallBack, tc);
+            IAsyncResult R = tcpc.Client.BeginReceive(sm.MessageIndex, 0, 4, SocketFlags.None, out se, sm.SizeReceiveCallBack, tcpc);
 
             sm.SendContent(ToSend);
 
@@ -130,22 +116,25 @@ namespace P2PSocket
                             Friend fr = new Friend();
                             fr.IP = item["IP"].ToString();
                             fr.UserName = item["UserName"].ToString();
-                            dat_Friends.Add(fr);
+                            data_Friends.Add(fr);
                         }));
 
                     }
                 }
                 else if (newmessage["Command"].ToString() == "TalkFrom")
                 {
-                    TalkMessage newm = new TalkMessage();
-                    newm.MessageData = newmessage;
+                    DataRow dr = data_TalkingMessage.NewRow();
+                    dr.SetField("RawJson", newmessage);
+                    dr.SetField("UserName", newmessage);
+                    dr.SetField("Content", newmessage);
+                    dr.SetField("MessageTime", newmessage);
 
                 }
                 else if (newmessage["Command"].ToString() == "FriendLogin")
                 {
                     this.Invoke(new Action(() =>
                     {
-                        Friend fnd = dat_Friends.SingleOrDefault(t => t.UserName == newmessage["FrendUserName"].ToString());
+                        Friend fnd = data_Friends.SingleOrDefault(t => t.UserName == newmessage["FrendUserName"].ToString());
                         fnd.IP = newmessage["IP"].ToString();
 
                     }));
@@ -153,16 +142,24 @@ namespace P2PSocket
                 //请求UDP开洞(P2P传输)
                 else if (newmessage["Command"].ToString() == "OpenHole")
                 {
-                    udp = new UdpClient();
+                    udpc = new UdpClient();
                     this.Invoke(new Action(() =>
                     {
-                        udp.Connect(IPAddress.Parse(tb_ip.Text), Convert.ToInt32(tb_port.Text));
+                        udpc.Connect(IPAddress.Parse(tb_ip.Text), Convert.ToInt32(tb_port.Text));
                         JObject SendInf = new JObject();
                         SendInf["Command"] = "UpdateUDF";
                         byte[] buf = Encoding.UTF8.GetBytes(SendInf.ToString());
-                        udp.Send(BitConverter.GetBytes(buf.Length), 4);
-                        udp.Send(buf, buf.Length);
+                        udpc.Send(BitConverter.GetBytes(buf.Length), 4);
+                        udpc.Send(buf, buf.Length);
                     }));
+
+
+                }
+                //P2P连接
+                else if (newmessage["Command"].ToString() == "P2PConnectTo")
+                {
+                    udpc = new UdpClient();
+
 
 
                 }
@@ -173,7 +170,7 @@ namespace P2PSocket
         }
 
 
-        static UdpClient uc = null;
+    
 
         #endregion
 
@@ -181,10 +178,10 @@ namespace P2PSocket
         {
             JObject ToSend = new JObject();
             ToSend["Command"] = DateTime.Now.ToString("TalkTo");
-            ToSend["SendTime"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff");
+            ToSend["MessageTime"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff");
             ToSend["Content"] = tb_content.Text;
-            ToSend["ToFendID"] = "";
-            MessageLib.SocketMessage sm = new MessageLib.SocketMessage(tc);
+            ToSend["ToFriendUserName"] = TalkingUserName;
+            MessageLib.SocketMessage sm = new MessageLib.SocketMessage(tcpc);
             sm.SendContent(ToSend);
         }
 
@@ -192,18 +189,14 @@ namespace P2PSocket
         {
 
         }
-
+        string TalkingUserName = "";
         private void gv_frend_SelectionChanged(object sender, EventArgs e)
         {
             if (((DataGridView)sender).SelectedRows.Count > 0)
             {
-                string UserName = ((Friend)(((DataGridView)sender).SelectedRows[0]).DataBoundItem).UserName;
-                
-
+                TalkingUserName = ((Friend)(((DataGridView)sender).SelectedRows[0]).DataBoundItem).UserName;
+                bs_TalkkingMessage.Filter = "UserName='" + TalkingUserName + "'";
             }
         }
-
-
-
     }
 }
