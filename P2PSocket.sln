@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P2PSocketServer", "P2PSocket\P2PSocketServer.csproj", "{322032A5-C4DF-4E15-88A9-15A93DA84A98}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P2PSocketClient", "P2PSocket\P2PSocketClient.csproj", "{322032A5-C4DF-4E15-88A9-15A93DA84A98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P2PClient", "P2PClient\P2PClient.csproj", "{EF44AF5C-9998-43A6-B9BA-7DC6FFEAB7D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P2PServer", "P2PClient\P2PServer.csproj", "{EF44AF5C-9998-43A6-B9BA-7DC6FFEAB7D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageLib", "MessageLib\MessageLib.csproj", "{B70F878F-3460-4F07-8E1B-A651304DDC74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EF44AF5C-9998-43A6-B9BA-7DC6FFEAB7D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF44AF5C-9998-43A6-B9BA-7DC6FFEAB7D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF44AF5C-9998-43A6-B9BA-7DC6FFEAB7D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B70F878F-3460-4F07-8E1B-A651304DDC74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B70F878F-3460-4F07-8E1B-A651304DDC74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B70F878F-3460-4F07-8E1B-A651304DDC74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B70F878F-3460-4F07-8E1B-A651304DDC74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -30,64 +30,114 @@
         {
             this.components = new System.ComponentModel.Container();
             this.gb_ServerSet = new System.Windows.Forms.GroupBox();
+            this.tb_password = new System.Windows.Forms.TextBox();
+            this.tb_username = new System.Windows.Forms.TextBox();
+            this.lbl_pwd = new System.Windows.Forms.Label();
+            this.lbl_usr = new System.Windows.Forms.Label();
             this.Btn_Start = new System.Windows.Forms.Button();
             this.tb_port = new System.Windows.Forms.TextBox();
             this.tb_ip = new System.Windows.Forms.TextBox();
             this.lbl_port = new System.Windows.Forms.Label();
             this.lbl_ip = new System.Windows.Forms.Label();
             this.gv_frend = new System.Windows.Forms.DataGridView();
-            this.gv_talkhistory = new System.Windows.Forms.DataGridView();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.bindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.f_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.f_ipandport = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.f_online = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bs_Friend = new System.Windows.Forms.BindingSource(this.components);
+            this.gv_talkhistory = new System.Windows.Forms.DataGridView();
             this.l_receivetime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.l_Raw = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.l_Text = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bs_TalkkingMessage = new System.Windows.Forms.BindingSource(this.components);
+            this.gb_talking = new System.Windows.Forms.GroupBox();
+            this.Btn_UDPSend = new System.Windows.Forms.Button();
+            this.btn_send = new System.Windows.Forms.Button();
+            this.tb_content = new System.Windows.Forms.TextBox();
             this.gb_ServerSet.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gv_frend)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs_Friend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gv_talkhistory)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs_TalkkingMessage)).BeginInit();
+            this.gb_talking.SuspendLayout();
             this.SuspendLayout();
             // 
             // gb_ServerSet
             // 
+            this.gb_ServerSet.Controls.Add(this.tb_password);
+            this.gb_ServerSet.Controls.Add(this.tb_username);
+            this.gb_ServerSet.Controls.Add(this.lbl_pwd);
+            this.gb_ServerSet.Controls.Add(this.lbl_usr);
             this.gb_ServerSet.Controls.Add(this.Btn_Start);
             this.gb_ServerSet.Controls.Add(this.tb_port);
             this.gb_ServerSet.Controls.Add(this.tb_ip);
             this.gb_ServerSet.Controls.Add(this.lbl_port);
             this.gb_ServerSet.Controls.Add(this.lbl_ip);
             this.gb_ServerSet.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.gb_ServerSet.Location = new System.Drawing.Point(12, 13);
+            this.gb_ServerSet.Location = new System.Drawing.Point(12, 4);
             this.gb_ServerSet.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gb_ServerSet.Name = "gb_ServerSet";
             this.gb_ServerSet.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.gb_ServerSet.Size = new System.Drawing.Size(615, 75);
+            this.gb_ServerSet.Size = new System.Drawing.Size(615, 84);
             this.gb_ServerSet.TabIndex = 1;
             this.gb_ServerSet.TabStop = false;
-            this.gb_ServerSet.Text = "监听设置";
+            this.gb_ServerSet.Text = "服务器设置";
+            // 
+            // tb_password
+            // 
+            this.tb_password.Location = new System.Drawing.Point(222, 46);
+            this.tb_password.Name = "tb_password";
+            this.tb_password.PasswordChar = '*';
+            this.tb_password.Size = new System.Drawing.Size(100, 23);
+            this.tb_password.TabIndex = 8;
+            // 
+            // tb_username
+            // 
+            this.tb_username.Location = new System.Drawing.Point(66, 49);
+            this.tb_username.Name = "tb_username";
+            this.tb_username.Size = new System.Drawing.Size(100, 23);
+            this.tb_username.TabIndex = 7;
+            // 
+            // lbl_pwd
+            // 
+            this.lbl_pwd.AutoSize = true;
+            this.lbl_pwd.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_pwd.Location = new System.Drawing.Point(181, 49);
+            this.lbl_pwd.Name = "lbl_pwd";
+            this.lbl_pwd.Size = new System.Drawing.Size(35, 17);
+            this.lbl_pwd.TabIndex = 6;
+            this.lbl_pwd.Text = "密码:";
+            // 
+            // lbl_usr
+            // 
+            this.lbl_usr.AutoSize = true;
+            this.lbl_usr.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_usr.Location = new System.Drawing.Point(7, 49);
+            this.lbl_usr.Name = "lbl_usr";
+            this.lbl_usr.Size = new System.Drawing.Size(47, 17);
+            this.lbl_usr.TabIndex = 5;
+            this.lbl_usr.Text = "用户名:";
             // 
             // Btn_Start
             // 
-            this.Btn_Start.Location = new System.Drawing.Point(313, 29);
+            this.Btn_Start.Location = new System.Drawing.Point(526, 32);
             this.Btn_Start.Name = "Btn_Start";
             this.Btn_Start.Size = new System.Drawing.Size(75, 23);
             this.Btn_Start.TabIndex = 4;
-            this.Btn_Start.Text = "监听";
+            this.Btn_Start.Text = "登录";
             this.Btn_Start.UseVisualStyleBackColor = true;
+            this.Btn_Start.Click += new System.EventHandler(this.Btn_Start_Click);
             // 
             // tb_port
             // 
-            this.tb_port.Location = new System.Drawing.Point(192, 29);
+            this.tb_port.Location = new System.Drawing.Point(222, 18);
             this.tb_port.Name = "tb_port";
             this.tb_port.Size = new System.Drawing.Size(100, 23);
             this.tb_port.TabIndex = 3;
+            this.tb_port.Text = "9230";
             // 
             // tb_ip
             // 
-            this.tb_ip.Location = new System.Drawing.Point(36, 32);
+            this.tb_ip.Location = new System.Drawing.Point(66, 21);
             this.tb_ip.Name = "tb_ip";
             this.tb_ip.Size = new System.Drawing.Size(100, 23);
             this.tb_ip.TabIndex = 2;
@@ -96,7 +146,7 @@
             // 
             this.lbl_port.AutoSize = true;
             this.lbl_port.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_port.Location = new System.Drawing.Point(151, 32);
+            this.lbl_port.Location = new System.Drawing.Point(181, 21);
             this.lbl_port.Name = "lbl_port";
             this.lbl_port.Size = new System.Drawing.Size(35, 17);
             this.lbl_port.TabIndex = 1;
@@ -106,7 +156,7 @@
             // 
             this.lbl_ip.AutoSize = true;
             this.lbl_ip.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_ip.Location = new System.Drawing.Point(7, 32);
+            this.lbl_ip.Location = new System.Drawing.Point(7, 21);
             this.lbl_ip.Name = "lbl_ip";
             this.lbl_ip.Size = new System.Drawing.Size(22, 17);
             this.lbl_ip.TabIndex = 0;
@@ -116,35 +166,23 @@
             // 
             this.gv_frend.AllowUserToAddRows = false;
             this.gv_frend.AllowUserToDeleteRows = false;
+            this.gv_frend.AutoGenerateColumns = false;
             this.gv_frend.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gv_frend.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.f_name,
             this.f_ipandport,
             this.f_online});
+            this.gv_frend.DataSource = this.bs_Friend;
             this.gv_frend.Location = new System.Drawing.Point(12, 95);
+            this.gv_frend.MultiSelect = false;
             this.gv_frend.Name = "gv_frend";
             this.gv_frend.ReadOnly = true;
             this.gv_frend.RowHeadersWidth = 10;
             this.gv_frend.RowTemplate.Height = 23;
+            this.gv_frend.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gv_frend.Size = new System.Drawing.Size(197, 421);
             this.gv_frend.TabIndex = 2;
-            // 
-            // gv_talkhistory
-            // 
-            this.gv_talkhistory.AllowUserToAddRows = false;
-            this.gv_talkhistory.AllowUserToDeleteRows = false;
-            this.gv_talkhistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gv_talkhistory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.l_receivetime,
-            this.l_Raw,
-            this.l_Text});
-            this.gv_talkhistory.Location = new System.Drawing.Point(216, 96);
-            this.gv_talkhistory.Name = "gv_talkhistory";
-            this.gv_talkhistory.ReadOnly = true;
-            this.gv_talkhistory.RowHeadersWidth = 12;
-            this.gv_talkhistory.RowTemplate.Height = 23;
-            this.gv_talkhistory.Size = new System.Drawing.Size(397, 420);
-            this.gv_talkhistory.TabIndex = 3;
+            this.gv_frend.SelectionChanged += new System.EventHandler(this.gv_frend_SelectionChanged);
             // 
             // f_name
             // 
@@ -166,6 +204,25 @@
             this.f_online.Name = "f_online";
             this.f_online.ReadOnly = true;
             // 
+            // gv_talkhistory
+            // 
+            this.gv_talkhistory.AllowUserToAddRows = false;
+            this.gv_talkhistory.AllowUserToDeleteRows = false;
+            this.gv_talkhistory.AutoGenerateColumns = false;
+            this.gv_talkhistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gv_talkhistory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.l_receivetime,
+            this.l_Raw,
+            this.l_Text});
+            this.gv_talkhistory.DataSource = this.bs_TalkkingMessage;
+            this.gv_talkhistory.Location = new System.Drawing.Point(6, 20);
+            this.gv_talkhistory.Name = "gv_talkhistory";
+            this.gv_talkhistory.ReadOnly = true;
+            this.gv_talkhistory.RowHeadersWidth = 12;
+            this.gv_talkhistory.RowTemplate.Height = 23;
+            this.gv_talkhistory.Size = new System.Drawing.Size(409, 272);
+            this.gv_talkhistory.TabIndex = 3;
+            // 
             // l_receivetime
             // 
             this.l_receivetime.HeaderText = "时间";
@@ -185,12 +242,53 @@
             this.l_Text.ReadOnly = true;
             this.l_Text.Width = 250;
             // 
+            // gb_talking
+            // 
+            this.gb_talking.Controls.Add(this.Btn_UDPSend);
+            this.gb_talking.Controls.Add(this.btn_send);
+            this.gb_talking.Controls.Add(this.tb_content);
+            this.gb_talking.Controls.Add(this.gv_talkhistory);
+            this.gb_talking.Location = new System.Drawing.Point(215, 95);
+            this.gb_talking.Name = "gb_talking";
+            this.gb_talking.Size = new System.Drawing.Size(421, 421);
+            this.gb_talking.TabIndex = 4;
+            this.gb_talking.TabStop = false;
+            this.gb_talking.Text = "聊天：";
+            // 
+            // Btn_UDPSend
+            // 
+            this.Btn_UDPSend.Location = new System.Drawing.Point(342, 359);
+            this.Btn_UDPSend.Name = "Btn_UDPSend";
+            this.Btn_UDPSend.Size = new System.Drawing.Size(72, 56);
+            this.Btn_UDPSend.TabIndex = 6;
+            this.Btn_UDPSend.Text = "P2P发送";
+            this.Btn_UDPSend.UseVisualStyleBackColor = true;
+            this.Btn_UDPSend.Click += new System.EventHandler(this.Btn_UDPSend_Click);
+            // 
+            // btn_send
+            // 
+            this.btn_send.Location = new System.Drawing.Point(343, 299);
+            this.btn_send.Name = "btn_send";
+            this.btn_send.Size = new System.Drawing.Size(72, 56);
+            this.btn_send.TabIndex = 5;
+            this.btn_send.Text = "服务器发送";
+            this.btn_send.UseVisualStyleBackColor = true;
+            this.btn_send.Click += new System.EventHandler(this.btn_send_Click);
+            // 
+            // tb_content
+            // 
+            this.tb_content.Location = new System.Drawing.Point(6, 298);
+            this.tb_content.Multiline = true;
+            this.tb_content.Name = "tb_content";
+            this.tb_content.Size = new System.Drawing.Size(330, 107);
+            this.tb_content.TabIndex = 4;
+            // 
             // TalkForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(625, 528);
-            this.Controls.Add(this.gv_talkhistory);
+            this.ClientSize = new System.Drawing.Size(698, 528);
+            this.Controls.Add(this.gb_talking);
             this.Controls.Add(this.gv_frend);
             this.Controls.Add(this.gb_ServerSet);
             this.Name = "TalkForm";
@@ -198,9 +296,11 @@
             this.gb_ServerSet.ResumeLayout(false);
             this.gb_ServerSet.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gv_frend)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs_Friend)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gv_talkhistory)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs_TalkkingMessage)).EndInit();
+            this.gb_talking.ResumeLayout(false);
+            this.gb_talking.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -218,11 +318,19 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn f_ipandport;
         private System.Windows.Forms.DataGridViewTextBoxColumn f_online;
         private System.Windows.Forms.DataGridView gv_talkhistory;
-        private System.Windows.Forms.BindingSource bindingSource1;
-        private System.Windows.Forms.BindingSource bindingSource2;
+        private System.Windows.Forms.BindingSource bs_Friend;
+        private System.Windows.Forms.BindingSource bs_TalkkingMessage;
         private System.Windows.Forms.DataGridViewTextBoxColumn l_receivetime;
         private System.Windows.Forms.DataGridViewTextBoxColumn l_Raw;
         private System.Windows.Forms.DataGridViewTextBoxColumn l_Text;
+        private System.Windows.Forms.TextBox tb_password;
+        private System.Windows.Forms.TextBox tb_username;
+        private System.Windows.Forms.Label lbl_pwd;
+        private System.Windows.Forms.Label lbl_usr;
+        private System.Windows.Forms.GroupBox gb_talking;
+        private System.Windows.Forms.Button btn_send;
+        private System.Windows.Forms.TextBox tb_content;
+        private System.Windows.Forms.Button Btn_UDPSend;
     }
 }
 
