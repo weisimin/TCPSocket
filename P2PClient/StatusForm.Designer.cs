@@ -40,14 +40,15 @@
             this.STL_Inf = new System.Windows.Forms.ToolStripStatusLabel();
             this.gb_ConnectState = new System.Windows.Forms.GroupBox();
             this.gv_statusdata = new System.Windows.Forms.DataGridView();
-            this.c_IP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.C_Port = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.C_RecTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.C_RecContent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CMS_Main = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MI_UserManager = new System.Windows.Forms.ToolStripMenuItem();
             this.MI_NewUser = new System.Windows.Forms.ToolStripMenuItem();
             this.Bs_StatusData = new System.Windows.Forms.BindingSource(this.components);
+            this.c_IP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.C_Port = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.C_UserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.C_RecTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.C_RecContent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gb_ServerSet.SuspendLayout();
             this.ST_Stus.SuspendLayout();
             this.gb_ConnectState.SuspendLayout();
@@ -164,6 +165,7 @@
             this.gv_statusdata.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.c_IP,
             this.C_Port,
+            this.C_UserName,
             this.C_RecTime,
             this.C_RecContent});
             this.gv_statusdata.ContextMenuStrip = this.CMS_Main;
@@ -175,31 +177,6 @@
             this.gv_statusdata.RowTemplate.Height = 23;
             this.gv_statusdata.Size = new System.Drawing.Size(609, 228);
             this.gv_statusdata.TabIndex = 0;
-            // 
-            // c_IP
-            // 
-            this.c_IP.HeaderText = "IP";
-            this.c_IP.Name = "c_IP";
-            this.c_IP.ReadOnly = true;
-            // 
-            // C_Port
-            // 
-            this.C_Port.HeaderText = "端口";
-            this.C_Port.Name = "C_Port";
-            this.C_Port.ReadOnly = true;
-            // 
-            // C_RecTime
-            // 
-            this.C_RecTime.HeaderText = "最后时间";
-            this.C_RecTime.Name = "C_RecTime";
-            this.C_RecTime.ReadOnly = true;
-            // 
-            // C_RecContent
-            // 
-            this.C_RecContent.HeaderText = "最后消息";
-            this.C_RecContent.Name = "C_RecContent";
-            this.C_RecContent.ReadOnly = true;
-            this.C_RecContent.Width = 250;
             // 
             // CMS_Main
             // 
@@ -222,6 +199,43 @@
             this.MI_NewUser.Size = new System.Drawing.Size(124, 22);
             this.MI_NewUser.Text = "新用户";
             this.MI_NewUser.Click += new System.EventHandler(this.MI_NewUser_Click);
+            // 
+            // c_IP
+            // 
+            this.c_IP.DataPropertyName = "IP";
+            this.c_IP.HeaderText = "IP";
+            this.c_IP.Name = "c_IP";
+            this.c_IP.ReadOnly = true;
+            // 
+            // C_Port
+            // 
+            this.C_Port.DataPropertyName = "Port";
+            this.C_Port.HeaderText = "端口";
+            this.C_Port.Name = "C_Port";
+            this.C_Port.ReadOnly = true;
+            // 
+            // C_UserName
+            // 
+            this.C_UserName.DataPropertyName = "UserName";
+            this.C_UserName.HeaderText = "会员";
+            this.C_UserName.Name = "C_UserName";
+            this.C_UserName.ReadOnly = true;
+            this.C_UserName.Width = 80;
+            // 
+            // C_RecTime
+            // 
+            this.C_RecTime.DataPropertyName = "RecTime";
+            this.C_RecTime.HeaderText = "最后时间";
+            this.C_RecTime.Name = "C_RecTime";
+            this.C_RecTime.ReadOnly = true;
+            // 
+            // C_RecContent
+            // 
+            this.C_RecContent.DataPropertyName = "RecContent";
+            this.C_RecContent.HeaderText = "最后消息";
+            this.C_RecContent.Name = "C_RecContent";
+            this.C_RecContent.ReadOnly = true;
+            this.C_RecContent.Width = 250;
             // 
             // StatusForm
             // 
@@ -261,15 +275,16 @@
         private System.Windows.Forms.ToolStripStatusLabel STL_Inf;
         private System.Windows.Forms.GroupBox gb_ConnectState;
         private System.Windows.Forms.DataGridView gv_statusdata;
-        private System.Windows.Forms.DataGridViewTextBoxColumn c_IP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn C_Port;
-        private System.Windows.Forms.DataGridViewTextBoxColumn C_RecTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn C_RecContent;
         private System.Windows.Forms.BindingSource Bs_StatusData;
         private System.Windows.Forms.Button btn_check;
         private System.Windows.Forms.ContextMenuStrip CMS_Main;
         private System.Windows.Forms.ToolStripMenuItem MI_UserManager;
         private System.Windows.Forms.ToolStripMenuItem MI_NewUser;
+        private System.Windows.Forms.DataGridViewTextBoxColumn c_IP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn C_Port;
+        private System.Windows.Forms.DataGridViewTextBoxColumn C_UserName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn C_RecTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn C_RecContent;
     }
 }
 

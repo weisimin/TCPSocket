@@ -33,9 +33,9 @@ namespace P2PServer.ServerData
     partial void Insertaspnet_Applications(aspnet_Applications instance);
     partial void Updateaspnet_Applications(aspnet_Applications instance);
     partial void Deleteaspnet_Applications(aspnet_Applications instance);
-    partial void Insertaspnet_FrendShip(aspnet_FrendShip instance);
-    partial void Updateaspnet_FrendShip(aspnet_FrendShip instance);
-    partial void Deleteaspnet_FrendShip(aspnet_FrendShip instance);
+    partial void Insertaspnet_Friendship(aspnet_Friendship instance);
+    partial void Updateaspnet_Friendship(aspnet_Friendship instance);
+    partial void Deleteaspnet_Friendship(aspnet_Friendship instance);
     partial void Insertaspnet_Paths(aspnet_Paths instance);
     partial void Updateaspnet_Paths(aspnet_Paths instance);
     partial void Deleteaspnet_Paths(aspnet_Paths instance);
@@ -85,11 +85,11 @@ namespace P2PServer.ServerData
 			}
 		}
 		
-		public System.Data.Linq.Table<aspnet_FrendShip> aspnet_FrendShip
+		public System.Data.Linq.Table<aspnet_Friendship> aspnet_Friendship
 		{
 			get
 			{
-				return this.GetTable<aspnet_FrendShip>();
+				return this.GetTable<aspnet_Friendship>();
 			}
 		}
 		
@@ -336,15 +336,15 @@ namespace P2PServer.ServerData
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.aspnet_FrendShip")]
-	public partial class aspnet_FrendShip : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.aspnet_Friendship")]
+	public partial class aspnet_Friendship : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private System.Guid _aspnet_UserID;
 		
-		private System.Guid _FrendaspnetID;
+		private System.Guid _FriendaspnetID;
 		
 		private System.Nullable<System.DateTime> _JoinTime;
 		
@@ -354,13 +354,13 @@ namespace P2PServer.ServerData
     partial void OnCreated();
     partial void Onaspnet_UserIDChanging(System.Guid value);
     partial void Onaspnet_UserIDChanged();
-    partial void OnFrendaspnetIDChanging(System.Guid value);
-    partial void OnFrendaspnetIDChanged();
+    partial void OnFriendaspnetIDChanging(System.Guid value);
+    partial void OnFriendaspnetIDChanged();
     partial void OnJoinTimeChanging(System.Nullable<System.DateTime> value);
     partial void OnJoinTimeChanged();
     #endregion
 		
-		public aspnet_FrendShip()
+		public aspnet_Friendship()
 		{
 			OnCreated();
 		}
@@ -385,22 +385,22 @@ namespace P2PServer.ServerData
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FrendaspnetID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid FrendaspnetID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FriendaspnetID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid FriendaspnetID
 		{
 			get
 			{
-				return this._FrendaspnetID;
+				return this._FriendaspnetID;
 			}
 			set
 			{
-				if ((this._FrendaspnetID != value))
+				if ((this._FriendaspnetID != value))
 				{
-					this.OnFrendaspnetIDChanging(value);
+					this.OnFriendaspnetIDChanging(value);
 					this.SendPropertyChanging();
-					this._FrendaspnetID = value;
-					this.SendPropertyChanged("FrendaspnetID");
-					this.OnFrendaspnetIDChanged();
+					this._FriendaspnetID = value;
+					this.SendPropertyChanged("FriendaspnetID");
+					this.OnFriendaspnetIDChanged();
 				}
 			}
 		}

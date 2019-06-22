@@ -39,22 +39,22 @@
             this.tb_ip = new System.Windows.Forms.TextBox();
             this.lbl_port = new System.Windows.Forms.Label();
             this.lbl_ip = new System.Windows.Forms.Label();
-            this.gv_frend = new System.Windows.Forms.DataGridView();
+            this.gv_Friend = new System.Windows.Forms.DataGridView();
             this.f_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.f_ipandport = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.f_ip = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.f_online = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bs_Friend = new System.Windows.Forms.BindingSource(this.components);
             this.gv_talkhistory = new System.Windows.Forms.DataGridView();
-            this.l_receivetime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.l_Raw = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.l_Text = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bs_TalkkingMessage = new System.Windows.Forms.BindingSource(this.components);
             this.gb_talking = new System.Windows.Forms.GroupBox();
             this.Btn_UDPSend = new System.Windows.Forms.Button();
             this.btn_send = new System.Windows.Forms.Button();
             this.tb_content = new System.Windows.Forms.TextBox();
+            this.l_MessageTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.l_Content = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.l_RawJson = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gb_ServerSet.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gv_frend)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gv_Friend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bs_Friend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gv_talkhistory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bs_TalkkingMessage)).BeginInit();
@@ -162,44 +162,47 @@
             this.lbl_ip.TabIndex = 0;
             this.lbl_ip.Text = "IP:";
             // 
-            // gv_frend
+            // gv_Friend
             // 
-            this.gv_frend.AllowUserToAddRows = false;
-            this.gv_frend.AllowUserToDeleteRows = false;
-            this.gv_frend.AutoGenerateColumns = false;
-            this.gv_frend.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gv_frend.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.gv_Friend.AllowUserToAddRows = false;
+            this.gv_Friend.AllowUserToDeleteRows = false;
+            this.gv_Friend.AutoGenerateColumns = false;
+            this.gv_Friend.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gv_Friend.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.f_name,
-            this.f_ipandport,
+            this.f_ip,
             this.f_online});
-            this.gv_frend.DataSource = this.bs_Friend;
-            this.gv_frend.Location = new System.Drawing.Point(12, 95);
-            this.gv_frend.MultiSelect = false;
-            this.gv_frend.Name = "gv_frend";
-            this.gv_frend.ReadOnly = true;
-            this.gv_frend.RowHeadersWidth = 10;
-            this.gv_frend.RowTemplate.Height = 23;
-            this.gv_frend.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gv_frend.Size = new System.Drawing.Size(197, 421);
-            this.gv_frend.TabIndex = 2;
-            this.gv_frend.SelectionChanged += new System.EventHandler(this.gv_frend_SelectionChanged);
+            this.gv_Friend.DataSource = this.bs_Friend;
+            this.gv_Friend.Location = new System.Drawing.Point(12, 95);
+            this.gv_Friend.MultiSelect = false;
+            this.gv_Friend.Name = "gv_Friend";
+            this.gv_Friend.ReadOnly = true;
+            this.gv_Friend.RowHeadersWidth = 10;
+            this.gv_Friend.RowTemplate.Height = 23;
+            this.gv_Friend.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gv_Friend.Size = new System.Drawing.Size(197, 421);
+            this.gv_Friend.TabIndex = 2;
+            this.gv_Friend.SelectionChanged += new System.EventHandler(this.gv_Friend_SelectionChanged);
             // 
             // f_name
             // 
+            this.f_name.DataPropertyName = "UserName";
             this.f_name.HeaderText = "好友";
             this.f_name.Name = "f_name";
             this.f_name.ReadOnly = true;
             this.f_name.Width = 80;
             // 
-            // f_ipandport
+            // f_ip
             // 
-            this.f_ipandport.HeaderText = "IP端口";
-            this.f_ipandport.Name = "f_ipandport";
-            this.f_ipandport.ReadOnly = true;
-            this.f_ipandport.Width = 80;
+            this.f_ip.DataPropertyName = "IP";
+            this.f_ip.HeaderText = "IP";
+            this.f_ip.Name = "f_ip";
+            this.f_ip.ReadOnly = true;
+            this.f_ip.Width = 80;
             // 
             // f_online
             // 
+            this.f_online.DataPropertyName = "OnLine";
             this.f_online.HeaderText = "在线";
             this.f_online.Name = "f_online";
             this.f_online.ReadOnly = true;
@@ -211,9 +214,9 @@
             this.gv_talkhistory.AutoGenerateColumns = false;
             this.gv_talkhistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gv_talkhistory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.l_receivetime,
-            this.l_Raw,
-            this.l_Text});
+            this.l_MessageTime,
+            this.l_Content,
+            this.l_RawJson});
             this.gv_talkhistory.DataSource = this.bs_TalkkingMessage;
             this.gv_talkhistory.Location = new System.Drawing.Point(6, 20);
             this.gv_talkhistory.Name = "gv_talkhistory";
@@ -222,25 +225,6 @@
             this.gv_talkhistory.RowTemplate.Height = 23;
             this.gv_talkhistory.Size = new System.Drawing.Size(409, 272);
             this.gv_talkhistory.TabIndex = 3;
-            // 
-            // l_receivetime
-            // 
-            this.l_receivetime.HeaderText = "时间";
-            this.l_receivetime.Name = "l_receivetime";
-            this.l_receivetime.ReadOnly = true;
-            // 
-            // l_Raw
-            // 
-            this.l_Raw.HeaderText = "包文";
-            this.l_Raw.Name = "l_Raw";
-            this.l_Raw.ReadOnly = true;
-            // 
-            // l_Text
-            // 
-            this.l_Text.HeaderText = "内容";
-            this.l_Text.Name = "l_Text";
-            this.l_Text.ReadOnly = true;
-            this.l_Text.Width = 250;
             // 
             // gb_talking
             // 
@@ -283,19 +267,41 @@
             this.tb_content.Size = new System.Drawing.Size(330, 107);
             this.tb_content.TabIndex = 4;
             // 
+            // l_MessageTime
+            // 
+            this.l_MessageTime.DataPropertyName = "MessageTime";
+            this.l_MessageTime.HeaderText = "时间";
+            this.l_MessageTime.Name = "l_MessageTime";
+            this.l_MessageTime.ReadOnly = true;
+            // 
+            // l_Content
+            // 
+            this.l_Content.DataPropertyName = "Content";
+            this.l_Content.HeaderText = "内容";
+            this.l_Content.Name = "l_Content";
+            this.l_Content.ReadOnly = true;
+            this.l_Content.Width = 250;
+            // 
+            // l_RawJson
+            // 
+            this.l_RawJson.DataPropertyName = "RawJson";
+            this.l_RawJson.HeaderText = "包文";
+            this.l_RawJson.Name = "l_RawJson";
+            this.l_RawJson.ReadOnly = true;
+            // 
             // TalkForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(698, 528);
             this.Controls.Add(this.gb_talking);
-            this.Controls.Add(this.gv_frend);
+            this.Controls.Add(this.gv_Friend);
             this.Controls.Add(this.gb_ServerSet);
             this.Name = "TalkForm";
             this.Text = "通讯窗口";
             this.gb_ServerSet.ResumeLayout(false);
             this.gb_ServerSet.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gv_frend)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gv_Friend)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bs_Friend)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gv_talkhistory)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bs_TalkkingMessage)).EndInit();
@@ -313,16 +319,10 @@
         private System.Windows.Forms.TextBox tb_ip;
         private System.Windows.Forms.Label lbl_port;
         private System.Windows.Forms.Label lbl_ip;
-        private System.Windows.Forms.DataGridView gv_frend;
-        private System.Windows.Forms.DataGridViewTextBoxColumn f_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn f_ipandport;
-        private System.Windows.Forms.DataGridViewTextBoxColumn f_online;
+        private System.Windows.Forms.DataGridView gv_Friend;
         private System.Windows.Forms.DataGridView gv_talkhistory;
         private System.Windows.Forms.BindingSource bs_Friend;
         private System.Windows.Forms.BindingSource bs_TalkkingMessage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn l_receivetime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn l_Raw;
-        private System.Windows.Forms.DataGridViewTextBoxColumn l_Text;
         private System.Windows.Forms.TextBox tb_password;
         private System.Windows.Forms.TextBox tb_username;
         private System.Windows.Forms.Label lbl_pwd;
@@ -331,6 +331,12 @@
         private System.Windows.Forms.Button btn_send;
         private System.Windows.Forms.TextBox tb_content;
         private System.Windows.Forms.Button Btn_UDPSend;
+        private System.Windows.Forms.DataGridViewTextBoxColumn f_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn f_ip;
+        private System.Windows.Forms.DataGridViewTextBoxColumn f_online;
+        private System.Windows.Forms.DataGridViewTextBoxColumn l_MessageTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn l_Content;
+        private System.Windows.Forms.DataGridViewTextBoxColumn l_RawJson;
     }
 }
 

@@ -11,10 +11,10 @@
       <Association Name="aspnet_Applications_aspnet_Membership" Member="aspnet_Membership" ThisKey="ApplicationId" OtherKey="ApplicationId" Type="aspnet_Membership" />
     </Type>
   </Table>
-  <Table Name="dbo.aspnet_FrendShip" Member="aspnet_FrendShip">
-    <Type Name="aspnet_FrendShip">
+  <Table Name="dbo.aspnet_Friendship" Member="aspnet_Friendship">
+    <Type Name="aspnet_Friendship">
       <Column Name="aspnet_UserID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="FrendaspnetID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FriendaspnetID" Storage="_FriendaspnetID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="JoinTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>

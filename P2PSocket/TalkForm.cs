@@ -40,7 +40,7 @@ namespace P2PSocket
             public string UserName { get; set; }
             public string IP { get; set; }
 
-
+            public string OnLine { get; set; }
         }
 
         DataTable data_TalkingMessage = new DataTable();
@@ -50,8 +50,13 @@ namespace P2PSocket
         UdpClient udpc = null;
         private void StartTalk(string IP, Int32 Port)
         {
-            tcpc = new TcpClient();
-            tcpc.Connect(IPAddress.Parse(IP), Port);
+            if (tcpc == null)
+            {
+                tcpc = new TcpClient();
+                tcpc.Connect(IPAddress.Parse(IP), Port);
+            }
+
+
 
 
 
@@ -107,16 +112,25 @@ namespace P2PSocket
                 }));
 
 
-                if (newmessage["Command"].ToString() == "Login")
+                if (newmessage["Command"].ToString() == "ImLogin")
                 {
-                    foreach (var item in newmessage["Frends"])
+                    foreach (var item in newmessage["Friends"])
                     {
                         this.Invoke(new Action(() =>
                         {
                             Friend fr = new Friend();
                             fr.IP = item["IP"].ToString();
+                            if (fr.IP != "")
+                            {
+                                fr.OnLine = "是";
+                            }
+                            else
+                            {
+                                fr.OnLine = "否";
+                            }
                             fr.UserName = item["UserName"].ToString();
                             data_Friends.Add(fr);
+                            this.Refresh(); 
                         }));
 
                     }
@@ -125,18 +139,27 @@ namespace P2PSocket
                 {
                     DataRow dr = data_TalkingMessage.NewRow();
                     dr.SetField("RawJson", newmessage);
-                    dr.SetField("UserName", newmessage);
-                    dr.SetField("Content", newmessage);
-                    dr.SetField("MessageTime", newmessage);
+                    dr.SetField("UserName", newmessage["TalkFromUserName"].ToString());
+                    dr.SetField("Content", newmessage["Content"].ToString());
+                    dr.SetField("MessageTime",Convert.ToDateTime( newmessage["MessageTime"].ToString()));
+                    data_TalkingMessage.Rows.Add(dr);
+                    this.Invoke(new Action(() => {
+                        this.Refresh();
+                    }));
+                }
+                else if (newmessage["Command"].ToString() == "TalkToError")
+                {
+                    MessageBox.Show("与" + newmessage["UserName"] + "的聊天内容:" + Environment.NewLine + newmessage["Content"]+Environment.NewLine+"对方没有收到");
 
                 }
                 else if (newmessage["Command"].ToString() == "FriendLogin")
                 {
                     this.Invoke(new Action(() =>
                     {
-                        Friend fnd = data_Friends.SingleOrDefault(t => t.UserName == newmessage["FrendUserName"].ToString());
+                        Friend fnd = data_Friends.SingleOrDefault(t => t.UserName == newmessage["FriendUserName"].ToString());
                         fnd.IP = newmessage["IP"].ToString();
-
+                        fnd.OnLine = "是";
+                        this.Refresh(); 
                     }));
                 }
                 //请求UDP开洞(P2P传输)
@@ -170,7 +193,7 @@ namespace P2PSocket
         }
 
 
-    
+
 
         #endregion
 
@@ -178,9 +201,9 @@ namespace P2PSocket
         {
             JObject ToSend = new JObject();
             ToSend["Command"] = DateTime.Now.ToString("TalkTo");
-            ToSend["MessageTime"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff");
+            ToSend["MessageTime"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             ToSend["Content"] = tb_content.Text;
-            ToSend["ToFriendUserName"] = TalkingUserName;
+            ToSend["TalkToUserName"] = TalkingUserName;
             MessageLib.SocketMessage sm = new MessageLib.SocketMessage(tcpc);
             sm.SendContent(ToSend);
         }
@@ -190,12 +213,13 @@ namespace P2PSocket
 
         }
         string TalkingUserName = "";
-        private void gv_frend_SelectionChanged(object sender, EventArgs e)
+        private void gv_Friend_SelectionChanged(object sender, EventArgs e)
         {
             if (((DataGridView)sender).SelectedRows.Count > 0)
             {
                 TalkingUserName = ((Friend)(((DataGridView)sender).SelectedRows[0]).DataBoundItem).UserName;
                 bs_TalkkingMessage.Filter = "UserName='" + TalkingUserName + "'";
+                gb_talking.Text = "与" + TalkingUserName + "聊天中";
             }
         }
     }

@@ -183,43 +183,48 @@ namespace P2PServer
 
 
 
-                    ServerData.dbDataContext db = new ServerData.dbDataContext();
+                    ServerData.dbDataContext db = new ServerData.dbDataContext(System.Configuration.ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString);
+                    r["Command"] = "ImLogin";
                     //取得好友
-                    var frends = db.aspnet_FrendShip.Where(t => t.aspnet_UserID == (Guid)msr.ProviderUserKey);
-                    foreach (var frenditem in frends)
+                    var Friends = db.aspnet_Friendship.Where(t => t.aspnet_UserID == (Guid)msr.ProviderUserKey);
+                    r["Friends"] = new JArray();
+                    foreach (var Frienditem in Friends)
                     {
-                        MembershipUser msu = Membership.GetUser(frenditem.FrendaspnetID);
-                        JObject JFrend = new JObject();
-                        JFrend["UserName"] = msu.UserName;
+                        MembershipUser msu = Membership.GetUser(Frienditem.FriendaspnetID);
+                        JObject JFriend = new JObject();
+                        JFriend["UserName"] = msu.UserName.ToLower();
 
                         OnLineData old = OnLineInf.SingleOrDefault(t => t.UserID == (Guid)msu.ProviderUserKey);
                         if (old != null)
                         {
-                            JFrend["IP"] = old.IP;
-                            JFrend["Port"] = old.Port;
-                            JFrend["OnLine"] = true;
+                            JFriend["IP"] = old.IP;
+                            JFriend["Port"] = old.Port;
+                            JFriend["OnLine"] = true;
                         }
                         else
                         {
-                            JFrend["OnLine"] = false;
+                            JFriend["IP"] = "";
+                            JFriend["Port"] = "";
+                            JFriend["OnLine"] = false;
                         }
 
 
 
-                        r["Fends"] = new JArray();
-                        (r["Fends"] as JArray).Add(JFrend);
+
+                        (r["Friends"] as JArray).Add(JFriend);
 
                     }
                     //通知好友上线
-                    var belfrends = db.aspnet_FrendShip.Where(t => t.FrendaspnetID == (Guid)msr.ProviderUserKey);
-                    foreach (var frenditem in belfrends)
+                    var belFriends = db.aspnet_Friendship.Where(t => t.FriendaspnetID == (Guid)msr.ProviderUserKey);
+                    foreach (var Frienditem in belFriends)
                     {
-                        OnLineData tonotice = OnLineInf.SingleOrDefault(t => t.UserID == frenditem.aspnet_UserID);
+                        OnLineData tonotice = OnLineInf.SingleOrDefault(t => t.UserID == Frienditem.aspnet_UserID);
                         if (tonotice != null)
                         {
                             JObject ToSendMessage = new JObject();
+                            ToSendMessage["Status"] = "Success";
                             ToSendMessage["Command"] = "FriendLogin";
-                            ToSendMessage["FrendUserName"] = msr.UserName;
+                            ToSendMessage["FriendUserName"] = msr.UserName.ToLower();
                             ToSendMessage["IP"] = ((IPEndPoint)ReceiveTc.Client.RemoteEndPoint).Address.ToString();
                             tonotice.skm.SendContent(ToSendMessage);
                         }
@@ -227,18 +232,32 @@ namespace P2PServer
 
                 }
                 Receiveskm.SendContent(r);
-
+                this.Invoke(new Action(()=>{
+                    this.Refresh();
+                }));
+               ;
             }
             //服务器转发通讯
             else if (newmessage["Command"].ToString() == "TalkTo")
             {
-                MembershipUser tomsr = Membership.GetUser(newmessage["TakeToUserName"].ToString());
+                MembershipUser tomsr = Membership.GetUser(newmessage["TalkToUserName"].ToString());
                 OnLineData old = OnLineInf.SingleOrDefault(t => t.UserID == (Guid)tomsr.ProviderUserKey);
+                OnLineData SayFrom=OnLineInf.SingleOrDefault(t=>t.tcpl==ReceiveTc);
                 if (old != null)
                 {
-                    newmessage["Command"] = "TalkForm";
-                    newmessage["TalkFromUserName"] = old.UserName;
+                    newmessage["Command"] = "TalkFrom";
+                    newmessage["Status"] = "Success";
+                    newmessage["TalkFromUserName"] = SayFrom.UserName;
                     old.skm.SendContent(newmessage);
+                }
+                else
+                {
+                    JObject rtnr = new JObject();
+                    rtnr["Command"] = "TalkToError";
+                    rtnr["Status"] = "Success";
+                    rtnr["UserName"] = newmessage["TakeToUserName"].ToString();
+                    rtnr["Content"] = newmessage["Content"].ToString();
+                    Receiveskm.SendContent(rtnr);
                 }
 
             }
@@ -248,6 +267,8 @@ namespace P2PServer
                 MembershipUser tomsr = Membership.GetUser(newmessage["UserName"].ToString());
                 OnLineData tofind = OnLineInf.SingleOrDefault(t => t.UserID == (Guid)tomsr.ProviderUserKey);
                 JObject tor = new JObject();
+                tor["Command"] = "GetUDPHoleInf";
+                tor["Status"] = "Success";
                 tor["P2PPort"] = tofind == null ? "" : tofind.P2pPort.ToString();
                 Receiveskm.SendContent(tor);
 
